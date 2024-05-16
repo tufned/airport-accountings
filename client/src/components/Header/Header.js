@@ -1,13 +1,25 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './header.css';
+import { reqData } from '../../utils/requests';
 
-function Header({ mainComponent, setMainComponentHandler }) {
+function Header({ mainComponent, setMainComponentHandler, setTableNameHandler, tableName }) {
   const [isTablesPopup, setIsTablesPopup] = useState(false);
+  const [tables, setTables] = useState([]);
 
-  const renderTablePage = () => {
-    setIsTablesPopup(false);
+  const renderTablePage = (e) => {
+    setTableNameHandler(e.target.id);
     setMainComponentHandler('table');
+
+    setIsTablesPopup(false);
   }
+
+  const isExecuteOnMount = useRef(true);
+  useEffect(() => {
+    if (!isExecuteOnMount.current) return;
+    isExecuteOnMount.current = false;
+
+    reqData('/table/all').then((res) => setTables(res.data))
+  }, []);
 
   return (
     <header className={`header-wrapper ${isTablesPopup ? 'active' : ''}`}>
@@ -18,7 +30,10 @@ function Header({ mainComponent, setMainComponentHandler }) {
             Tables
           </div>
           <div className={`header-item ${mainComponent === 'about' ? 'active' : ''}`}
-               onClick={() => setMainComponentHandler('about')}>
+               onClick={() => {
+                 setTableNameHandler(null);
+                 setMainComponentHandler('about');
+               }}>
             About
           </div>
         </div>
@@ -26,10 +41,9 @@ function Header({ mainComponent, setMainComponentHandler }) {
       </div>
       {isTablesPopup && (
         <div className="tables-popup-container">
-          <div className="table-item"
-               onClick={renderTablePage}>Passengers</div>
-          <div className="table-item"
-               onClick={renderTablePage}>Planes</div>
+          {tables.map(table => (
+            <div id={table} key={table} className={`table-item ${tableName === table ? 'active' : ''}`} onClick={renderTablePage}>{table}</div>
+          ))}
         </div>
       )}
     </header>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import './table.css';
+import {reqData} from "../../utils/requests";
 
 
 const columns = [
@@ -33,22 +34,47 @@ const rows = [
 
 
 
-function Table(props) {
+function Table({ name }) {
+  const [columns, setColumns] = useState([]);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    reqData(`/table/${name}`).then(res => tableSetup(res.data));
+  }, [name]);
+
+
+  function tableSetup(data) {
+    const columnsArr = Object.keys(data[0]);
+
+    const columnsObj = columnsArr.map((field) => {
+      return {
+        field: field,
+        headerName: field,
+      }
+    });
+
+    if (!columnsArr.includes('id')) {
+      data.forEach((row, index) => {
+        row.id = index;
+      });
+    }
+
+    setColumns(columnsObj);
+    setRows(data);
+  }
+
+
   return (
-    <Box sx={{height: 400, width: '100%'}}>
+    <Box sx={{height: '80vh', width: '100%'}}>
       <DataGrid
         rows={rows}
         columns={columns}
         initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
-            },
-          },
-          pinnedColumns: {
-            left: ['id', 'firstName'],
-            right: ['salary']
-          }
+          // pagination: {
+          //   paginationModel: {
+          //     pageSize: 5,
+          //   },
+          // }
         }}
         pageSizeOptions={[5]}
         checkboxSelection

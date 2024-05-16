@@ -34,8 +34,8 @@
     .header-item.active
       color: #fff
 
-    .header-tables-item.active
-      color: #3099ff
+    //.header-tables-item.active
+    //  color: #3099ff
 
   h1
     font-size: 28px
@@ -53,8 +53,11 @@
       cursor: pointer
       font-size: 18px
       font-weight: 500
+      color: rgba(255, 255, 255, .6)
     .table-item:hover
       color: #fff
+    .table-item.active
+      color: #3099ff
 
 
 .header-wrapper.active
@@ -63,3 +66,6 @@
     color: #fff
   .header-item.active:not(.header-tables-item.active)
     color: rgba(255, 255, 255, .8)
+
+  .header-item:not(.header-tables-item)
+    display: none

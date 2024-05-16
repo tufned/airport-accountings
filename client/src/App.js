@@ -7,20 +7,28 @@ import About from "./components/About/About";
 
 function App() {
   const [mainComponent, setMainComponent] = useState('about');
+  // const [mainComponent, setMainComponent] = useState('table');
   const setMainComponentHandler = (componentName) => {
     setMainComponent(componentName);
   }
 
-  useEffect(() => console.log(mainComponent), [mainComponent]);
+  const [tableName, setTableName] = useState(null);
+  // const [tableName, setTableName] = useState('passengers');
+  const setTableNameHandler = (name) => {
+    setTableName(name);
+  }
 
   return (
     <>
       <Header
         mainComponent={mainComponent}
-        setMainComponentHandler={setMainComponentHandler} />
+        setMainComponentHandler={setMainComponentHandler}
+        setTableNameHandler={setTableNameHandler}
+        tableName={tableName}
+      />
       <main>
         {mainComponent === 'about' && <About/>}
-        {mainComponent === 'table' && <Table/>}
+        {mainComponent === 'table' && <Table name={tableName} />}
       </main>
     </>
   );
