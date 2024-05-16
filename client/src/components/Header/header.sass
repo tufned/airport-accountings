@@ -1,0 +1,65 @@
+
+.header-wrapper
+  background-color: rgba(12, 12, 12, 0.8)
+  --globalnav-background:  rgba(22, 22, 23, .8)
+  --globalnav-backdrop-filter: saturate(180%) blur(20px)
+  color: rgba(255, 255, 255, .8)
+  transition: all .4s ease-out
+  position: fixed
+  top: 0
+  left: 0
+  z-index: 99
+
+  .header
+    height: 60px
+    min-width: calc(100vw - 10vw)
+    padding: 0 5vw
+    display: flex
+    align-items: center
+    justify-content: space-between
+
+  .header-navbar
+    display: flex
+    align-items: center
+    gap: 15px
+
+    .header-item
+      display: flex
+      justify-content: center
+      align-items: center
+      cursor: pointer
+      height: 75%
+    .header-item:hover
+      color: #fff
+    .header-item.active
+      color: #fff
+
+    .header-tables-item.active
+      color: #3099ff
+
+  h1
+    font-size: 28px
+
+
+  .tables-popup-container
+    height: fit-content
+    min-width: calc(100vw - 10vw)
+    padding: 5px 5vw 20px 5vw
+    display: flex
+    flex-direction: column
+    gap: 10px
+
+    .table-item
+      cursor: pointer
+      font-size: 18px
+      font-weight: 500
+    .table-item:hover
+      color: #fff
+
+
+.header-wrapper.active
+  background-color: #000
+  h1
+    color: #fff
+  .header-item.active:not(.header-tables-item.active)
+    color: rgba(255, 255, 255, .8)
