@@ -25,7 +25,6 @@ function Table({ name, tableComponentReMount }) {
 
   function tableSetup(data) {
     const columnsArr = Object.keys(data[0]);
-    console.log(data);
 
     const columnsObj = columnsArr.map((field) => {
       return {
@@ -39,6 +38,14 @@ function Table({ name, tableComponentReMount }) {
       if (row.created_at) {
         let date = new Date(row.created_at);
         row.created_at = moment(date).format('YYYY-MM-DD hh:mm:ss');
+      }
+      if (row.departure_date) {
+        let date = new Date(row.departure_date);
+        row.departure_date = moment(date).format('YYYY-MM-DD hh:mm:ss');
+      }
+      if (row.arrival_date) {
+        let date = new Date(row.arrival_date);
+        row.arrival_date = moment(date).format('YYYY-MM-DD hh:mm:ss');
       }
     });
 

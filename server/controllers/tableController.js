@@ -55,7 +55,6 @@ exports.createRecord = async (req, res, next) => {
 
 exports.updateRecord = async (req, res, next) => {
   const data = req.body;
-  console.log(data);
 
   let valuesStr = '';
   Object.keys(data).forEach(key => {

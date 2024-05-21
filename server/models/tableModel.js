@@ -22,12 +22,12 @@ class TableModel {
   }
 
   static async createRecord(tableName, keys, values) {
-    console.log(`INSERT INTO ${dbName}.${tableName} (${keys}) VALUES (${values})`);
+    // console.log(`INSERT INTO ${dbName}.${tableName} (${keys}) VALUES (${values})`);
     return TableModel.#runQuery(`INSERT INTO ${dbName}.${tableName} (${keys}) VALUES (${values})`);
   }
 
   static async updateRecord(tableName, valuesStr, id) {
-    console.log(`UPDATE ${dbName}.${tableName} SET ${valuesStr} WHERE id = ${id}`);
+    // console.log(`UPDATE ${dbName}.${tableName} SET ${valuesStr} WHERE id = ${id}`);
     return TableModel.#runQuery(`UPDATE ${dbName}.${tableName} SET ${valuesStr} WHERE id = ${id}`);
   }
 }
