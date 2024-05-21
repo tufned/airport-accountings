@@ -18,3 +18,16 @@ export const postData = async (url, postData) => {
 
   return res.json();
 }
+
+
+export const updateData = async (url, data) => {
+  const res = await fetch(process.env.REACT_APP_API_URL + url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  });
+
+  return res.json();
+}

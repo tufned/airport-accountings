@@ -6,17 +6,22 @@ import {useEffect, useState} from "react";
 import About from "./components/About/About";
 
 function App() {
-  const [mainComponent, setMainComponent] = useState('about');
-  // const [mainComponent, setMainComponent] = useState('table');
+  // const [mainComponent, setMainComponent] = useState('about');
+  const [mainComponent, setMainComponent] = useState('table');
   const setMainComponentHandler = (componentName) => {
     setMainComponent(componentName);
   }
 
-  const [tableName, setTableName] = useState(null);
-  // const [tableName, setTableName] = useState('passengers');
+  // const [tableName, setTableName] = useState(null);
+  const [tableName, setTableName] = useState('passengers');
   const setTableNameHandler = (name) => {
     setTableName(name);
   }
+
+  const getId = () => "id" + Math.random().toString(16).slice(2);
+
+  const [tableComponentKey, setTableComponentKey] = useState(getId());
+  const tableComponentReMount = () => setTableComponentKey(getId());
 
   return (
     <>
@@ -28,7 +33,7 @@ function App() {
       />
       <main>
         {mainComponent === 'about' && <About/>}
-        {mainComponent === 'table' && <Table name={tableName} />}
+        {mainComponent === 'table' && <Table key={tableComponentKey} name={tableName} tableComponentReMount={tableComponentReMount}/>}
       </main>
     </>
   );
