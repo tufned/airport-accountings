@@ -6,12 +6,19 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import {Button} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import {postData, updateData} from "../../utils/requests";
+import {postData, updateData, deleteData} from "../../utils/requests";
 
 function ShowRecordPopup({ record, isCreateMode, popupToggle, tableName, tableComponentReMount }) {
   const [isEditMode, setIsEditMode] = useState(isCreateMode);
   const [error, setError] = useState(null);
   const [resStatus, setResStatus] = useState(null);
+
+
+  function editModeToggle() {
+    setIsEditMode(prevState => !prevState);
+    setError(null);
+    setResStatus(null);
+  }
 
   const [formData, setFormData] = useState({});
   const inputChangeHandler = (e) => {
@@ -54,7 +61,7 @@ function ShowRecordPopup({ record, isCreateMode, popupToggle, tableName, tableCo
       popupToggle();
       tableComponentReMount();
     }
-  }, [error]);
+  }, [error, resStatus]);
 
 
   function submitHandler(e) {
@@ -68,29 +75,20 @@ function ShowRecordPopup({ record, isCreateMode, popupToggle, tableName, tableCo
           });
     }
     else {
-      updateData(`/table/${tableName}`, formData)
+      updateData(`/table/${tableName}/${formData.id}`, formData)
           .then(res => {
             setResStatus(res.status)
             setError(res.message)
           });
     }
-
-    // popupToggle();
   }
 
-  function editModeToggle() {
-    setIsEditMode(prevState => !prevState);
-    setError(null);
-    setResStatus(null);
-  }
-  function saveRecord() {
-    // fetch()
-    editModeToggle();
-    // popupToggle();
-  }
   function deleteRecord() {
-    // fetch()
-    // popupToggle();
+    deleteData(`/table/${tableName}/${formData.id}`)
+        .then(res => {
+          setResStatus(res.status)
+          setError(res.message)
+        });
   }
 
 

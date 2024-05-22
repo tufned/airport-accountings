@@ -14,7 +14,8 @@ CREATE TABLE visas (
 );
 
 CREATE TABLE black_list (
-    name VARCHAR(255) PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) UNIQUE,
     type TINYINT NOT NULL,
     CHECK ( type = 1 OR type = 2 )
 );
@@ -108,7 +109,8 @@ VALUES ('Carl Jung', 1),
        ('Ted Floyd', 1),
        ('Emmanuel Kline', 0),
        ('Kathie Hodges', 1),
-       ('Winston Larsen', 1);
+       ('Winston Larsen', 1),
+       ('John Marston', 1);
 
 INSERT INTO terminals (id, flights_type)
 VALUES ('A', 1), ('B', 2);

@@ -11,6 +11,7 @@ exports.getAllTables = async (req, res, next) => {
   }
 }
 
+
 exports.checkTableName = async (req, res, next, name) => {
   const tables = await TableModel.getTablesNames();
 
@@ -22,6 +23,7 @@ exports.checkTableName = async (req, res, next, name) => {
   req.name = name;
   next();
 }
+
 
 exports.getTable = async (req, res, next) => {
   try {
@@ -53,8 +55,24 @@ exports.createRecord = async (req, res, next) => {
 }
 
 
+
+exports.checkRecordId = (req, res, next, recordId) => {
+
+  if (isNaN(recordId) && typeof recordId === 'string') recordId = `'${recordId}'`;
+
+  if (!recordId || recordId?.length === 0) return next({
+    errorMsg: "Invalid ID",
+    statusCode: 404
+  });
+
+  req.recordId = recordId;
+  next();
+}
+
+
 exports.updateRecord = async (req, res, next) => {
   const data = req.body;
+  const id = req.recordId;
 
   let valuesStr = '';
   Object.keys(data).forEach(key => {
@@ -66,8 +84,21 @@ exports.updateRecord = async (req, res, next) => {
   valuesStr = valuesStr.trim().slice(0, -1);
 
   try {
-    const result = await TableModel.updateRecord(req.name, valuesStr, data.id);
+    const result = await TableModel.updateRecord(req.name, valuesStr, id);
     res.status(201).json(successObj(result));
+
+  } catch (err) {
+    next({errorMsg: err.message, statusCode: 500});
+  }
+}
+
+
+exports.deleteRecord = async (req, res, next) => {
+  const id = req.recordId;
+
+  try {
+    const result = await TableModel.deleteRecord(req.name, id);
+    res.status(200).json(successObj(result));
 
   } catch (err) {
     next({errorMsg: err.message, statusCode: 500});

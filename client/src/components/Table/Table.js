@@ -37,15 +37,15 @@ function Table({ name, tableComponentReMount }) {
       if (!row.id) row.id = index;
       if (row.created_at) {
         let date = new Date(row.created_at);
-        row.created_at = moment(date).format('YYYY-MM-DD hh:mm:ss');
+        row.created_at = moment(date).format('YYYY-MM-DD HH:mm:ss');
       }
       if (row.departure_date) {
         let date = new Date(row.departure_date);
-        row.departure_date = moment(date).format('YYYY-MM-DD hh:mm:ss');
+        row.departure_date = moment(date).format('YYYY-MM-DD HH:mm:ss');
       }
       if (row.arrival_date) {
         let date = new Date(row.arrival_date);
-        row.arrival_date = moment(date).format('YYYY-MM-DD hh:mm:ss');
+        row.arrival_date = moment(date).format('YYYY-MM-DD HH:mm:ss');
       }
     });
 

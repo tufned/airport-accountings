@@ -83,7 +83,7 @@ WHERE is_registration_success = 0;
 
 
 # Список пасажирів які знаходяться в розшуку
-SELECT id,
+SELECT passengers.id,
        black_list.name AS name,
        type,
        is_passport,
