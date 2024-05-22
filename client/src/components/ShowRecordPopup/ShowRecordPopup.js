@@ -51,7 +51,11 @@ function ShowRecordPopup({ record, isCreateMode, popupToggle, tableName, tableCo
       <div key={`record-item_${key}`} className="record-item">
         <span className="field">{key}: </span>
         {!isEditMode && <span>{formData[key]}</span>}
-        {isEditMode && <input name={key} value={formData[key]} onChange={inputChangeHandler} type="text" />}
+        {isEditMode && <input name={key}
+                              value={formData[key]}
+                              onChange={inputChangeHandler}
+                              type="text"
+                              disabled={key === 'id' && !isNaN(formData[key])} />}
       </div>
     ));
   }
@@ -91,6 +95,12 @@ function ShowRecordPopup({ record, isCreateMode, popupToggle, tableName, tableCo
         });
   }
 
+  function cancelHandler() {
+    setFormData(record);
+    editModeToggle();
+  }
+
+
 
   return (
     <div className="popup-wrapper">
@@ -99,7 +109,7 @@ function ShowRecordPopup({ record, isCreateMode, popupToggle, tableName, tableCo
       <div className="popup">
         <div className="popup-header">
           {!isEditMode && <EditIcon onClick={editModeToggle} />}
-          {!isCreateMode && (isEditMode ? <CancelIcon onClick={editModeToggle} /> : <DeleteIcon onClick={deleteRecord}/>)}
+          {!isCreateMode && (isEditMode ? <CancelIcon onClick={cancelHandler} /> : <DeleteIcon onClick={deleteRecord}/>)}
         </div>
 
         {resStatus !== null && <div className="error-shell">{error}</div>}
