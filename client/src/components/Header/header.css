@@ -35,6 +35,11 @@
 .header-wrapper .header-navbar .header-item.active {
   color: #fff;
 }
+.header-wrapper .header-navbar .reset-but {
+  background-color: #d77b4a;
+  padding: 7px 10px;
+  border-radius: 5px;
+}
 .header-wrapper h1 {
   font-size: 28px;
 }

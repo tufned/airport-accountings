@@ -21,6 +21,13 @@ function Header({ mainComponent, setMainComponentHandler, setTableNameHandler, t
     reqData('/table/all').then((res) => setTables(res.data))
   }, []);
 
+
+  const resetTablesHandler = () => reqData(`/reset`).then(res => {
+      if (res.status === "success") window.location.reload();
+    });
+
+
+
   return (
     <header className={`header-wrapper ${isTablesPopup ? 'active' : ''}`}>
       <div className='header'>
@@ -35,6 +42,9 @@ function Header({ mainComponent, setMainComponentHandler, setTableNameHandler, t
                  setMainComponentHandler('about');
                }}>
             About
+          </div>
+          <div className={`header-item reset-but ${mainComponent === 'about' ? 'active' : ''}`} onClick={resetTablesHandler}>
+            Reset Tables Data (double click)
           </div>
         </div>
         <h1>Облік пасажирів в аеропорту</h1>
