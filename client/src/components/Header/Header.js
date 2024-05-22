@@ -43,7 +43,7 @@ function Header({ mainComponent, setMainComponentHandler, setTableNameHandler, t
                }}>
             About
           </div>
-          <div className={`header-item reset-but ${mainComponent === 'about' ? 'active' : ''}`} onClick={resetTablesHandler}>
+          <div className={`header-item reset-but ${mainComponent === 'about' ? 'active' : ''}`} onDoubleClick={resetTablesHandler}>
             Reset Tables Data (double click)
           </div>
         </div>

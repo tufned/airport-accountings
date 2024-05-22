@@ -39,14 +39,14 @@ exports.getTable = async (req, res, next) => {
 exports.createRecord = async (req, res, next) => {
   const data = req.body;
 
-  let valuesStr = '';
+  const valuesArr = [];
   Object.values(data).forEach(elem => {
-    if (isNaN(elem) && typeof elem === 'string') valuesStr += `'${elem}',`;
-    else if (!isNaN(elem)) valuesStr += elem;
+    if (isNaN(elem) && typeof elem === 'string') valuesArr.push(`'${elem}'`);
+    else if (!isNaN(elem)) valuesArr.push(elem);
   });
 
   try {
-    const result = await TableModel.createRecord(req.name, Object.keys(data), valuesStr);
+    const result = await TableModel.createRecord(req.name, Object.keys(data), valuesArr.join(','));
     res.status(201).json(successObj(result));
 
   } catch (err) {
@@ -74,17 +74,16 @@ exports.updateRecord = async (req, res, next) => {
   const data = req.body;
   const id = req.recordId;
 
-  let valuesStr = '';
+  const valuesArr = [];
   Object.keys(data).forEach(key => {
     if (key === 'id') return;
 
-    if (isNaN(data[key]) && typeof data[key] === 'string') valuesStr += `${key}='${data[key]}', `;
-    else if (!isNaN(data[key])) valuesStr += `${key}=${data[key]}, `;
+    if (isNaN(data[key]) && typeof data[key] === 'string') valuesArr.push(`${key}='${data[key]}'`);
+    else if (!isNaN(data[key])) valuesArr.push(`${key}=${data[key]}`);
   });
-  valuesStr = valuesStr.trim().slice(0, -1);
 
   try {
-    const result = await TableModel.updateRecord(req.name, valuesStr, id);
+    const result = await TableModel.updateRecord(req.name, valuesArr.join(','), id);
     res.status(201).json(successObj(result));
 
   } catch (err) {

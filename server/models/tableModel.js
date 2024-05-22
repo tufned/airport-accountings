@@ -23,13 +23,13 @@ class TableModel {
 
   static async createRecord(tableName, keys, values) {
     const query = `INSERT INTO ${dbName}.${tableName} (${keys}) VALUES (${values})`;
-    // console.log(query);
+    console.log(query);
     return TableModel.#runQuery(query);
   }
 
   static async updateRecord(tableName, valuesStr, id) {
     const query = `UPDATE ${dbName}.${tableName} SET ${valuesStr} WHERE id = ${id}`;
-    // console.log(query);
+    console.log(query);
     return TableModel.#runQuery(query);
   }
 
